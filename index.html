@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Hakan Akakca — Portfolio</title>
+  <meta name="description" content="Hakan Akakca — Étudiant BUT Réseaux & Télécommunications IUT Colmar. 18 ans. Étudiant en cybersécurité et réseaux. Compétences : VLAN, DHCP, TCP/IP, Wireshark, Linux, Python, HTML/CSS, GNS3, Arduino, ESP32. Projets : SAÉ 1.05 Python/PyQt5, réseau GNS3, serre Arduino, site ESP32, WiFi heatmap. GitHub : github.com/Hakan-aoe4/Projet.">
+  <meta name="keywords" content="Hakan Akakca, BUT RT, réseaux télécommunications, Colmar, cybersécurité, Python, PyQt5, GNS3, VLAN, Linux, Arduino, ESP32, Wireshark, PowerShell">
+  <meta name="author" content="Hakan Akakca">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f0f4f8; --surface: #ffffff; --border: #d1dce8;
+      --text: #0f1f35; --muted: #5a7490; --tag-bg: #e8f0f9; --nav-h: 64px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; min-height: 100vh; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      background: rgba(240,244,248,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; z-index: 100;
+    }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--text); text-decoration: none; }
+    .nav-links { display: flex; gap: 6px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: .875rem; font-weight: 500; padding: 6px 14px; border-radius: 20px; transition: all .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); background: var(--surface); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+
+    /* FRIEND MODE */
+    .friend-badge { display: none; align-items: center; gap: 6px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 20px; padding: 5px 14px; font-size: .78rem; font-weight: 600; color: #16a34a; }
+    .friend-badge.visible { display: flex; }
+    .friend-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #16a34a; }
+    .lock-btn { display: flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 600; padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--tag-bg); color: var(--muted); cursor: pointer; transition: all .2s; }
+    .lock-btn:hover { background: var(--surface); color: var(--text); }
+
+    /* MODAL */
+    .pw-overlay { display: none; position: fixed; inset: 0; background: rgba(26,25,22,0.5); backdrop-filter: blur(6px); z-index: 999; align-items: center; justify-content: center; }
+    .pw-overlay.open { display: flex; }
+    .pw-box { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px 40px; width: 100%; max-width: 360px; box-shadow: 0 20px 60px rgba(0,0,0,.12); animation: fadeUp .25s ease; }
+    .pw-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 6px; }
+    .pw-sub { font-size: .875rem; color: var(--muted); margin-bottom: 24px; }
+    .pw-input { width: 100%; padding: 11px 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: .925rem; color: var(--text); outline: none; transition: border .2s; margin-bottom: 10px; }
+    .pw-input:focus { border-color: var(--text); }
+    .pw-error { font-size: .8rem; color: #dc2626; margin-bottom: 12px; min-height: 18px; }
+    .pw-actions { display: flex; gap: 10px; }
+    .pw-submit { flex: 1; padding: 11px; border-radius: 12px; border: none; background: #1a3a5c; color: #fff; font-family: 'DM Sans', sans-serif; font-size: .9rem; font-weight: 600; cursor: pointer; transition: opacity .2s; }
+    .pw-submit:hover { opacity: .85; }
+    .pw-cancel { padding: 11px 16px; border-radius: 12px; border: 1px solid var(--border); background: transparent; font-family: 'DM Sans', sans-serif; font-size: .9rem; color: var(--muted); cursor: pointer; }
+    .pw-cancel:hover { background: var(--tag-bg); }
+
+    /* LAYOUT */
+    .page-wrapper { padding-top: calc(var(--nav-h) + 40px); padding-bottom: 80px; max-width: 960px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+
+    /* ── HERO ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      gap: 40px;
+      align-items: start;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .hero-tag { display: inline-flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 12px; }
+    .hero-tag::before { content: ''; width: 6px; height: 6px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 0 3px rgba(74,222,128,.25); }
+    h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; line-height: 1.1; letter-spacing: -.02em; margin-bottom: 6px; }
+    h1 em { font-style: italic; color: var(--muted); }
+    .hero-subtitle { font-size: .9rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
+    .hero-desc { color: var(--muted); font-size: .95rem; max-width: 520px; line-height: 1.7; margin-bottom: 20px; }
+    .hero-photo { width: 130px; height: 130px; border-radius: 50%; background: var(--tag-bg); border: 3px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; margin-top: 8px; }
+    .hero-photo span { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--muted); }
+
+    /* CONTACT ROW */
+    .contact-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 0; }
+    .contact-item { display: flex; align-items: center; gap: 7px; font-size: .85rem; color: var(--muted); }
+    .contact-item a { color: var(--muted); text-decoration: none; transition: color .2s; }
+    .contact-item a:hover { color: var(--text); }
+
+    /* ── MAIN GRID ── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .main-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .full-width { grid-column: 1 / -1; }
+
+    /* CARDS */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; transition: box-shadow .2s, transform .2s; }
+    .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.07); transform: translateY(-2px); }
+    .card-title { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .card-subtitle-scale { font-size: .65rem; font-weight: 400; text-transform: none; color: var(--muted); letter-spacing: 0; margin-left: 6px; font-style: italic; }
+
+    /* SKILL BARS */
+    .skill-row { display: flex; flex-direction: column; gap: 10px; }
+    .skill-item { display: flex; flex-direction: column; gap: 4px; }
+    .skill-label { font-size: .83rem; color: var(--text); }
+    .bar { height: 4px; background: var(--tag-bg); border-radius: 10px; overflow: hidden; }
+    .bar-fill { height: 100%; background: #1a56a0; border-radius: 10px; }
+
+    /* TAGS */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { background: var(--tag-bg); color: var(--muted); font-size: .75rem; font-weight: 500; padding: 3px 11px; border-radius: 20px; border: 1px solid var(--border); }
+
+    /* PROJETS LIST */
+    .proj-list { display: flex; flex-direction: column; gap: 10px; }
+    .proj-item { display: flex; align-items: flex-start; gap: 12px; }
+    .proj-num { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--border); flex-shrink: 0; line-height: 1.4; }
+    .proj-info { flex: 1; }
+    .proj-name { font-size: .9rem; font-weight: 600; margin-bottom: 2px; }
+    .proj-tech { font-size: .78rem; color: var(--muted); }
+
+    /* LANG */
+    .lang-list { display: flex; flex-direction: column; gap: 10px; }
+    .lang-item { display: flex; align-items: center; justify-content: space-between; }
+    .lang-name { font-size: .88rem; font-weight: 500; }
+    .lang-level { font-size: .78rem; color: var(--muted); }
+    .lang-dots { display: flex; gap: 4px; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--tag-bg); border: 1px solid var(--border); }
+    .dot.filled { background: #1a56a0; border-color: #1a56a0; }
+
+    /* FORMATION TIMELINE */
+    .timeline { display: flex; flex-direction: column; gap: 12px; }
+    .tl-item { display: flex; gap: 12px; align-items: flex-start; }
+    .tl-dot { width: 8px; height: 8px; border-radius: 50%; background: #1a56a0; margin-top: 6px; flex-shrink: 0; }
+    .tl-dot.old { background: var(--border); }
+    .tl-date { font-size: .75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+    .tl-title { font-size: .88rem; font-weight: 600; margin-bottom: 1px; }
+    .tl-school { font-size: .78rem; color: var(--muted); }
+
+    /* QUALITES */
+    .qual-list { display: flex; flex-direction: column; gap: 7px; }
+    .qual-item { display: flex; align-items: flex-start; gap: 8px; font-size: .85rem; color: var(--text); }
+    .qual-item::before { content: '→'; color: var(--muted); flex-shrink: 0; }
+
+    /* LINKS */
+    .btn-link { display: inline-flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 600; color: var(--text); text-decoration: none; padding: 5px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--tag-bg); transition: all .2s; margin-top: 10px; }
+    .btn-link:hover { background: #1a3a5c; color: #fff; border-color: #1a3a5c; }
+
+    /* PAGE NAV */
+    .page-nav { display: flex; justify-content: flex-end; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .page-nav a { display: inline-flex; align-items: center; gap: 8px; font-size: .875rem; font-weight: 600; color: var(--text); text-decoration: none; padding: 10px 20px; border: 1px solid var(--border); border-radius: 24px; background: var(--surface); transition: all .2s; }
+    .page-nav a:hover { background: #1a3a5c; color: #fff; border-color: #1a3a5c; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .hero { animation: fadeUp .4s ease both; }
+    .main-grid, .main-grid-3 { animation: fadeUp .4s ease both; animation-delay: .1s; }
+
+    @media (max-width: 700px) {
+      nav { padding: 0 16px; gap: 6px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-photo { order: -1; width: 90px; height: 90px; }
+      .main-grid, .main-grid-3 { grid-template-columns: 1fr; }
+      .page-wrapper { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;" aria-hidden="true">
+  Hakan Akakca. Étudiant BUT Réseaux et Télécommunications 1ère année IUT Colmar. 18 ans né 19/12/2007. Colmar 68000. Passionné par la cybersécurité et les réseaux. Permis voiture. Compétences réseaux : VLAN, routage inter-VLAN, DHCP, TCP/IP, OSI, switch routeur, Wireshark. Systèmes : Windows Linux Debian VirtualBox. Télécoms : WiFi heatmap, fibre optique, câblage réseau. Développement : HTML CSS Python Arduino C. Logiciels : DaVinci Resolve, Inventor, PowerPoint, Canva, GNS3. Langues : Français bilingue, Turc bilingue, Anglais scolaire. Projets : SAÉ 1.05 Python PyQt5 PowerShell détection gros fichiers, réseau GNS3 RIPv2 VLAN, serre Arduino automatisée, site web ESP32, mesure WiFi heatmap. Formation : BUT RT 2025-2026 IUT Colmar, BAC STI2D 2025 Lycée Beaumont Saint-Dié-des-Vosges. Expérience : aide cuisinier kebab 1 mois. GitHub : github.com/Hakan-aoe4/Projet.
+</div>
+
+<div class="pw-overlay" id="pwOverlay">
+  <div class="pw-box">
+    <div class="pw-title">Mode ami 🔓</div>
+    <div class="pw-sub">Entre le mot de passe pour voir les infos complètes.</div>
+    <input type="password" class="pw-input" id="pwInput" placeholder="Mot de passe" onkeydown="if(event.key==='Enter') checkPassword()">
+    <div class="pw-error" id="pwError"></div>
+    <div class="pw-actions">
+      <button class="pw-cancel" onclick="closeModal()">Annuler</button>
+      <button class="pw-submit" onclick="checkPassword()">Accéder</button>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">Hakan Akakca</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Profil</a></li>
+    <li><a href="competences.html">Compétences</a></li>
+    <li><a href="projets.html">Projets</a></li>
+    <li><a href="formation.html">Formation</a></li>
+  </ul>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <div class="friend-badge" id="friendBadge">
+      <div class="friend-badge-dot"></div>Mode ami
+      <span onclick="lockMode()" style="cursor:pointer;margin-left:4px;opacity:.6;" title="Verrouiller">✕</span>
+    </div>
+    <button class="lock-btn" id="lockBtn" onclick="openModal()">🔒 Mode ami</button>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+
+  <div class="hero">
+    <div>
+      <div class="hero-tag">Étudiant · Colmar, 68000</div>
+      <h1>Hakan <em>Akakca</em></h1>
+      <div class="hero-subtitle">BUT Réseaux &amp; Télécommunications — IUT de Colmar</div>
+      <p class="hero-desc">
+        Étudiant en 1ère année de BUT RT à l'IUT de Colmar, passionné par les réseaux, la cybersécurité et l'informatique. Rigoureux et curieux, j'aime apprendre et construire des projets concrets.
+      </p>
+      <div class="contact-row">
+        <span id="phoneSlot"></span>
+        <span id="mailSlot"></span>
+        <span class="contact-item">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          <a href="https://github.com/Hakan-aoe4/Projet/tree/main" target="_blank">GitHub</a>
+        </span>
+        <span class="contact-item">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          Permis voiture
+        </span>
+      </div>
+    </div>
+    <div class="hero-photo"><span>HA</span></div>
+  </div>
+
+  <div class="main-grid">
+    <div class="card">
+      <div class="card-title">Réseaux <span class="card-subtitle-scale">(Échelle BUT RT)</span></div>
+      <div class="skill-row">
+        <div class="skill-item"><div class="skill-label">VLAN / Routage inter-VLAN</div><div class="bar"><div class="bar-fill" style="width:70%"></div></div></div>
+        <div class="skill-item"><div class="skill-label">DHCP / TCP/IP / Modèle OSI</div><div class="bar"><div class="bar-fill" style="width:65%"></div></div></div>
+        <div class="skill-item"><div class="skill-label">Config switch / routeur</div><div class="bar"><div class="bar-fill" style="width:60%"></div></div></div>
+        <div class="skill-item"><div class="skill-label">Wireshark</div><div class="bar"><div class="bar-fill" style="width:55%"></div></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Systèmes & Informatique <span class="card-subtitle-scale">(Échelle BUT RT)</span></div>
+      <div class="skill-row">
+        <div class="skill-item"><div class="skill-label">Linux Debian</div><div class="bar"><div class="bar-fill" style="width:55%"></div></div></div>
+        <div class="skill-item"><div class="skill-label">VirtualBox</div><div class="bar"><div class="bar-fill" style="width:80%"></div></div></div>
+        <div class="skill-item"><div class="skill-label">HTML / CSS</div><div class="bar"><div class="bar-fill" style="width:65%"></div></div></div>
+        <div class="skill-item"><div class="skill-label">Python (bases)</div><div class="bar"><div class="bar-fill" style="width:35%"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-grid-3">
+
+    <div class="card">
+      <div class="card-title">Projets réalisés</div>
+      <div class="proj-list">
+        <div class="proj-item">
+          <div class="proj-num">01</div>
+          <div class="proj-info">
+            <div class="proj-name">Outil détection gros fichiers</div>
+            <div class="proj-tech">Python · PyQt5 · PowerShell · JSON</div>
+          </div>
+        </div>
+        <div class="proj-item">
+          <div class="proj-num">02</div>
+          <div class="proj-info">
+            <div class="proj-name">Réseau d'entreprise</div>
+            <div class="proj-tech">GNS3 · VLAN · STP · RIPv2</div>
+          </div>
+        </div>
+        <div class="proj-item">
+          <div class="proj-num">03</div>
+          <div class="proj-info">
+            <div class="proj-name">Serre automatisée</div>
+            <div class="proj-tech">Arduino C · Inventor · Capteurs</div>
+          </div>
+        </div>
+        <div class="proj-item">
+          <div class="proj-num">04</div>
+          <div class="proj-info">
+            <div class="proj-name">Sensibilisation cybersécurité</div>
+            <div class="proj-tech">Hygiène informatique · Vidéo</div>
+          </div>
+        </div>
+        <div class="proj-item">
+          <div class="proj-num">05</div>
+          <div class="proj-info">
+            <div class="proj-name">Analyse WiFi heatmap</div>
+            <div class="proj-tech">Mesure signal · Cartographie</div>
+          </div>
+        </div>
+      </div>
+      <a href="projets.html" class="btn-link">Voir le détail →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Formation</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div>
+            <div class="tl-date">2025 – 2026</div>
+            <div class="tl-title">BUT Réseaux & Télécommunications</div>
+            <div class="tl-school">IUT de Colmar — 1ère année</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot old"></div>
+          <div>
+            <div class="tl-date">2022 – 2025</div>
+            <div class="tl-title">BAC STI2D</div>
+            <div class="tl-school">Lycée Beaumont — St-Dié-des-Vosges</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot old"></div>
+          <div>
+            <div class="tl-date">2022</div>
+            <div class="tl-title">Brevet des collèges</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px;">
+        <div class="card-title" style="margin-top:8px;">Expérience pro</div>
+        <div class="qual-list">
+          <div class="qual-item">Aide en cuisine — kebab (1 mois)</div>
+          <div class="qual-item">Service, nettoyage, organisation</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Langues</div>
+      <div class="lang-list" style="margin-bottom:18px;">
+        <div class="lang-item">
+          <span class="lang-name">🇫🇷 Français</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="lang-level">Bilingue</span>
+            <div class="lang-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+          </div>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">🇹🇷 Turc</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="lang-level">Bilingue</span>
+            <div class="lang-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+          </div>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">🇬🇧 Anglais</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="lang-level">Scolaire</span>
+            <div class="lang-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-title">Qualités</div>
+      <div class="qual-list">
+        <div class="qual-item">Rigoureux et organisé</div>
+        <div class="qual-item">Apprentissage rapide</div>
+        <div class="qual-item">Travail en équipe</div>
+        <div class="qual-item">Polyvalent</div>
+      </div>
+      <div style="margin-top:14px;">
+        <div class="card-title">Centres d'interest</div>
+        <div class="tags">
+          <span class="tag">Musculation</span>
+          <span class="tag">Vélo</span>
+          <span class="tag">Piano</span>
+          <span class="tag">Cuisine</span>
+          <span class="tag">Informatique</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="main-grid">
+    <div class="card">
+      <div class="card-title">Télécommunications <span class="card-subtitle-scale">(Échelle BUT RT)</span></div>
+      <div class="skill-row">
+        <div class="skill-item"><div class="skill-label">Mesure WiFi / Heatmap</div><div class="bar"><div class="bar-fill" style="width:50%"></div></div></div>
+        <div class="skill-item"><div class="skill-label">Analyse de signal</div><div class="bar"><div class="bar-fill" style="width:45%"></div></div></div>
+        <div class="skill-item"><div class="skill-label">Notions fibre optique</div><div class="bar"><div class="bar-fill" style="width:40%"></div></div></div>
+        <div class="skill-item"><div class="skill-label">Câblage réseau</div><div class="bar"><div class="bar-fill" style="width:55%"></div></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Logiciels maîtrisés</div>
+      <div class="tags">
+        <span class="tag">GNS3</span>
+        <span class="tag">Wireshark</span>
+        <span class="tag">VirtualBox</span>
+        <span class="tag">DaVinci Resolve</span>
+        <span class="tag">Autodesk Inventor</span>
+        <span class="tag">PowerPoint</span>
+        <span class="tag">Canva</span>
+        <span class="tag">VS Code</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-nav">
+    <a href="competences.html">Compétences détaillées →</a>
+  </div>
+
+</div>
+
+<script>
+  // Infos privées encodées base64
+  function _d(s) { return atob(s); }
+  const _p = ['MDYgNTEgODIgMzkgOTY=', 'aGFrYW5zaWJlbDIxOEBnbWFpbC5jb20='];
+
+  function injectPrivateInfo() {
+    const phoneIcon = `<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>`;
+    const mailIcon = `<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`;
+    document.getElementById('phoneSlot').className = 'contact-item';
+    document.getElementById('phoneSlot').innerHTML = phoneIcon + _d(_p[0]);
+    document.getElementById('mailSlot').className = 'contact-item';
+    document.getElementById('mailSlot').innerHTML = mailIcon + `<a href="mailto:${_d(_p[1])}">${_d(_p[1])}</a>`;
+  }
+
+  function clearPrivateInfo() {
+    ['phoneSlot','mailSlot'].forEach(id => {
+      document.getElementById(id).className = '';
+      document.getElementById(id).innerHTML = '';
+    });
+  }
+
+  const PASS_HASH = 'd654d711fa1d24e32543c3415d81c3ca4968fe1669857bee2faf3efeef796aca';
+
+  async function hashStr(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function checkPassword() {
+    const h = await hashStr(document.getElementById('pwInput').value);
+    if (h === PASS_HASH) { closeModal(); enableFriendMode(); sessionStorage.setItem('friendMode','1'); }
+    else { document.getElementById('pwError').textContent = 'Mot de passe incorrect.'; document.getElementById('pwInput').focus(); }
+  }
+
+  function enableFriendMode() {
+    document.getElementById('friendBadge').classList.add('visible');
+    document.getElementById('lockBtn').style.display = 'none';
+    injectPrivateInfo();
+  }
+
+  function lockMode() {
+    sessionStorage.removeItem('friendMode');
+    document.getElementById('friendBadge').classList.remove('visible');
+    document.getElementById('lockBtn').style.display = '';
+    clearPrivateInfo();
+  }
+
+  function openModal() {
+    document.getElementById('pwOverlay').classList.add('open');
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwError').textContent = '';
+    setTimeout(() => document.getElementById('pwInput').focus(), 100);
+  }
+
+  function closeModal() { document.getElementById('pwOverlay').classList.remove('open'); }
+  document.getElementById('pwOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+  if (sessionStorage.getItem('friendMode')) enableFriendMode();
+</script>
+</body>
+</html>

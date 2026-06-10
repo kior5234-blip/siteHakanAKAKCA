@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Hakan Akakca — Compétences</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f0f4f8;
+      --surface: #ffffff;
+      --border: #d1dce8;
+      --text: #0f1f35;
+      --muted: #5a7490;
+      --accent: #2a2a2a;
+      --tag-bg: #e8f0f9;
+      --nav-h: 64px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(240,244,248,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; z-index: 100;
+    }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--text); text-decoration: none; }
+    .nav-links { display: flex; gap: 6px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 6px 14px; border-radius: 20px; transition: all 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); background: var(--surface); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+    .page-wrapper { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 80px; max-width: 960px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+
+    .page-header { margin-bottom: 52px; }
+    .page-header h2 { font-family: 'DM Serif Display', serif; font-size: 2.5rem; font-weight: 400; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .page-header p { color: var(--muted); font-size: 1rem; }
+
+    .section { margin-bottom: 52px; }
+    .section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 24px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; transition: box-shadow 0.2s, transform 0.2s; }
+    .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); transform: translateY(-2px); }
+    .card-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 12px; }
+
+    .skill-row { display: flex; flex-direction: column; gap: 14px; }
+    .skill-item { display: flex; flex-direction: column; gap: 5px; }
+    .skill-meta { display: flex; justify-content: space-between; font-size: 0.875rem; }
+    .bar { height: 5px; background: var(--tag-bg); border-radius: 10px; overflow: hidden; }
+    .bar-fill { height: 100%; background: #1a56a0; border-radius: 10px; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+    .tag { background: var(--tag-bg); color: var(--muted); font-size: 0.78rem; font-weight: 500; padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border); }
+
+    /* SOFTS */
+    .soft-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .soft-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; display: flex; align-items: center; gap: 14px; transition: box-shadow 0.2s; }
+    .soft-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+    .soft-icon { font-size: 1.6rem; width: 40px; text-align: center; }
+    .soft-info { display: flex; flex-direction: column; }
+    .soft-name { font-weight: 600; font-size: 0.9rem; }
+    .soft-level { font-size: 0.78rem; color: var(--muted); }
+
+    /* LANG */
+    .lang-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .lang-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; text-align: center; }
+    .lang-flag { font-size: 2.5rem; margin-bottom: 8px; }
+    .lang-name { font-weight: 600; font-size: 1rem; }
+    .lang-level { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+    .lang-dots { display: flex; justify-content: center; gap: 5px; margin-top: 10px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--tag-bg); border: 1px solid var(--border); }
+    .dot.filled { background: #1a56a0; border-color: #1a56a0; }
+
+    .page-nav { display: flex; justify-content: space-between; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .page-nav a { display: inline-flex; align-items: center; gap: 8px; font-size: 0.875rem; font-weight: 600; color: var(--text); text-decoration: none; padding: 10px 20px; border: 1px solid var(--border); border-radius: 24px; background: var(--surface); transition: all 0.2s; }
+    .page-nav a:hover { background: #1a3a5c; color: #fff; border-color: #1a3a5c; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .section { animation: fadeUp 0.45s ease both; }
+    .section:nth-child(2) { animation-delay: 0.1s; }
+    .section:nth-child(3) { animation-delay: 0.2s; }
+    .section:nth-child(4) { animation-delay: 0.3s; }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .lang-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Hakan Akakca</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Profil</a></li>
+    <li><a href="competences.html" class="active">Compétences</a></li>
+    <li><a href="projets.html">Projets</a></li>
+    <li><a href="formation.html">Formation</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <h2>Compétences &amp; Logiciels</h2>
+    <p>Techniques, outils et langues maîtrisés</p>
+  </div>
+
+  <!-- TECH -->
+  <div class="section">
+    <div class="section-label">Compétences techniques</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title">Réseaux</div>
+        <div class="skill-row">
+          <div class="skill-item">
+            <div class="skill-meta"><span>VLAN / Routage inter-VLAN</span></div>
+            <div class="bar"><div class="bar-fill" style="width:70%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-meta"><span>DHCP / TCP/IP / Modèle OSI</span></div>
+            <div class="bar"><div class="bar-fill" style="width:65%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-meta"><span>Config switch / routeur</span></div>
+            <div class="bar"><div class="bar-fill" style="width:60%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-meta"><span>Wireshark</span></div>
+            <div class="bar"><div class="bar-fill" style="width:55%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Systèmes & Informatique</div>
+        <div class="skill-row">
+          <div class="skill-item">
+            <div class="skill-meta"><span>Linux Debian</span></div>
+            <div class="bar"><div class="bar-fill" style="width:55%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-meta"><span>VirtualBox</span></div>
+            <div class="bar"><div class="bar-fill" style="width:60%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-meta"><span>Windows / Gestion utilisateurs</span></div>
+            <div class="bar"><div class="bar-fill" style="width:65%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Télécoms</div>
+        <div class="skill-row">
+          <div class="skill-item">
+            <div class="skill-meta"><span>Mesure WiFi / Heatmap</span></div>
+            <div class="bar"><div class="bar-fill" style="width:50%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-meta"><span>Notions fibre optique</span></div>
+            <div class="bar"><div class="bar-fill" style="width:45%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-meta"><span>Câblage réseau</span></div>
+            <div class="bar"><div class="bar-fill" style="width:55%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Développement</div>
+        <div class="skill-row">
+          <div class="skill-item">
+            <div class="skill-meta"><span>HTML / CSS</span></div>
+            <div class="bar"><div class="bar-fill" style="width:65%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-meta"><span>Python (bases)</span></div>
+            <div class="bar"><div class="bar-fill" style="width:35%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-meta"><span>Arduino (C)</span></div>
+            <div class="bar"><div class="bar-fill" style="width:40%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGICIELS -->
+  <div class="section">
+    <div class="section-label">Logiciels maîtrisés</div>
+    <div class="soft-grid">
+      <div class="soft-card">
+        <div class="soft-icon">🎬</div>
+        <div class="soft-info">
+          <span class="soft-name">DaVinci Resolve</span>
+          <span class="soft-level">Montage vidéo avancé</span>
+        </div>
+      </div>
+      <div class="soft-card">
+        <div class="soft-icon">🔧</div>
+        <div class="soft-info">
+          <span class="soft-name">Inventor</span>
+          <span class="soft-level">Conception 3D</span>
+        </div>
+      </div>
+      <div class="soft-card">
+        <div class="soft-icon">📊</div>
+        <div class="soft-info">
+          <span class="soft-name">PowerPoint / Canva</span>
+          <span class="soft-level">Présentations pro</span>
+        </div>
+      </div>
+      <div class="soft-card">
+        <div class="soft-icon">🌐</div>
+        <div class="soft-info">
+          <span class="soft-name">GNS3</span>
+          <span class="soft-level">Simulation réseau</span>
+        </div>
+      </div>
+      <div class="soft-card">
+        <div class="soft-icon">🖥️</div>
+        <div class="soft-info">
+          <span class="soft-name">VirtualBox</span>
+          <span class="soft-level">Virtualisation</span>
+        </div>
+      </div>
+      <div class="soft-card">
+        <div class="soft-icon">🔍</div>
+        <div class="soft-info">
+          <span class="soft-name">Wireshark</span>
+          <span class="soft-level">Analyse de trames</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LANGUES -->
+  <div class="section">
+    <div class="section-label">Langues</div>
+    <div class="lang-grid">
+      <div class="lang-card">
+        <div class="lang-flag">🇫🇷</div>
+        <div class="lang-name">Français</div>
+        <div class="lang-level">Bilingue</div>
+        <div class="lang-dots">
+          <div class="dot filled"></div>
+          <div class="dot filled"></div>
+          <div class="dot filled"></div>
+          <div class="dot filled"></div>
+          <div class="dot filled"></div>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-flag">🇹🇷</div>
+        <div class="lang-name">Turc</div>
+        <div class="lang-level">Bilingue</div>
+        <div class="lang-dots">
+          <div class="dot filled"></div>
+          <div class="dot filled"></div>
+          <div class="dot filled"></div>
+          <div class="dot filled"></div>
+          <div class="dot filled"></div>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-flag">🇬🇧</div>
+        <div class="lang-name">Anglais</div>
+        <div class="lang-level">Niveau scolaire</div>
+        <div class="lang-dots">
+          <div class="dot filled"></div>
+          <div class="dot filled"></div>
+          <div class="dot filled"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-nav">
+    <a href="index.html">← Profil</a>
+    <a href="projets.html">Projets →</a>
+  </div>
+
+</div>
+</body>
+</html>

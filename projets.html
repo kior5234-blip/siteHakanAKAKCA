@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Hakan Akakca — Projets</title>
+  <!-- SEO / IA -->
+  <meta name="description" content="Projets de Hakan Akakca, étudiant BUT Réseaux & Télécommunications à Colmar : réseau GNS3, serre Arduino, gestion des absences, cybersécurité, analyse WiFi, outil Python PyQt5.">
+  <meta name="author" content="Hakan Akakca">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f5f3ef;--surface:#fff;--border:#e0ddd8;--text:#1a1916;--muted:#7a7672;--tag-bg:#eeecea;--nav-h:64px; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;}
+    nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(240,244,248,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 40px;z-index:100;}
+    .nav-logo{font-family:'DM Serif Display',serif;font-size:1.25rem;color:var(--text);text-decoration:none;}
+    .nav-links{display:flex;gap:6px;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;font-weight:500;padding:6px 14px;border-radius:20px;transition:all .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--surface);box-shadow:0 1px 4px rgba(0,0,0,.08);}
+    .page-wrapper{padding-top:calc(var(--nav-h) + 48px);padding-bottom:80px;max-width:960px;margin:0 auto;padding-left:24px;padding-right:24px;}
+    .page-header{margin-bottom:52px;}
+    .page-header h2{font-family:'DM Serif Display',serif;font-size:2.5rem;font-weight:400;letter-spacing:-.02em;margin-bottom:8px;}
+    .page-header p{color:var(--muted);}
+    .section{margin-bottom:52px;}
+    .section-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+    .project-list{display:flex;flex-direction:column;gap:20px;}
+    .project-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px 32px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;transition:box-shadow .2s,transform .2s;}
+    .project-card:hover{box-shadow:0 6px 28px rgba(0,0,0,.08);transform:translateY(-2px);}
+    .project-num{font-family:'DM Serif Display',serif;font-size:3.5rem;font-weight:400;color:var(--border);line-height:1;user-select:none;}
+    .proj-category{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;}
+    .proj-title{font-family:'DM Serif Display',serif;font-size:1.6rem;font-weight:400;letter-spacing:-.01em;margin-bottom:12px;}
+    .proj-desc{color:var(--muted);font-size:.925rem;line-height:1.7;margin-bottom:16px;}
+    .proj-details{margin-bottom:16px;}
+    .proj-detail-item{display:flex;align-items:flex-start;gap:8px;font-size:.875rem;color:var(--text);margin-bottom:5px;}
+    .proj-detail-item::before{content:'—';color:var(--muted);flex-shrink:0;}
+    .tags{display:flex;flex-wrap:wrap;gap:7px;}
+    .tag{background:var(--tag-bg);color:var(--muted);font-size:.78rem;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid var(--border);}
+    .proj-links{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+    .proj-link{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:600;color:var(--text);text-decoration:none;padding:7px 16px;border:1px solid var(--border);border-radius:20px;background:var(--tag-bg);transition:all .2s;}
+    .proj-link:hover{background:var(--text);color:#fff;border-color:var(--text);}
+    .page-nav{display:flex;justify-content:space-between;margin-top:56px;padding-top:24px;border-top:1px solid var(--border);}
+    .page-nav a{display:inline-flex;align-items:center;gap:8px;font-size:.875rem;font-weight:600;color:var(--text);text-decoration:none;padding:10px 20px;border:1px solid var(--border);border-radius:24px;background:var(--surface);transition:all .2s;}
+    .page-nav a:hover{background:var(--text);color:#fff;border-color:var(--text);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    .project-card{animation:fadeUp .45s ease both;}
+    @media(max-width:640px){nav{padding:0 20px;}.nav-links{display:none;}.project-card{grid-template-columns:1fr;padding:20px;}.project-num{font-size:2rem;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Hakan Akakca</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Profil</a></li>
+    <li><a href="competences.html">Compétences</a></li>
+    <li><a href="projets.html" class="active">Projets</a></li>
+    <li><a href="formation.html">Formation</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <h2>Projets</h2>
+    <p>Réalisations académiques et personnelles</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Projets universitaires — BUT RT</div>
+    <div class="project-list">
+
+      <!-- PROJET 1 -->
+      <div class="project-card">
+        <div>
+          <div class="proj-category">Développement logiciel · Python · PowerShell</div>
+          <div class="proj-title">Projet 01 — Outil de détection de gros fichiers</div>
+          <p class="proj-desc">Application complète de reporting pour détecter et gérer les fichiers volumineux sur un système Windows. Interface graphique avec camembert interactif, cases à cocher et génération automatique d'un script PowerShell de suppression destiné à résoudre les manques d'espace de stockage.</p>
+          <div class="proj-details">
+            <div class="proj-detail-item">Script 1 (PyQt5) — sélection graphique du répertoire à analyser[cite: 1]</div>
+            <div class="proj-detail-item">Script 2 (Python) — parcours de l'arborescence, tri par taille, export JSON[cite: 1]</div>
+            <div class="proj-detail-item">Script 3 (PyQt5) — IHM avec camembert (QChart), légendes par onglets, cases à cocher[cite: 1]</div>
+            <div class="proj-detail-item">Script PowerShell orchestrateur — enchaîne les 3 scripts automatiquement[cite: 1]</div>
+          </div>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">PyQt5</span>
+            <span class="tag">PowerShell</span>
+            <span class="tag">JSON</span>
+            <span class="tag">QChart</span>
+            <span class="tag">Développement logiciel</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/kior5234-blip/Projet-01-SA-1.05-Outil-gros-fichiers-/blob/main/SA%C3%891.05%20Traiter%20les%20donn%C3%A9es%20(2).pdf" target="_blank" class="proj-link">📄 Rapport d'Analyse (PDF)</a>
+          </div>
+        </div>
+        <div class="project-num">01</div>
+      </div>
+
+      <!-- PROJET 2 -->
+      <div class="project-card">
+        <div>
+          <div class="proj-category">Développement / IoT · Arduino</div>
+          <div class="proj-title">Projet 02 — Serre autonome automatisée</div>
+          <p class="proj-desc">Conception et réalisation complète d'une mini-serre automatisée : modélisation 3D, câblage électronique, programmation Arduino en C.</p>
+          <div class="proj-details">
+            <div class="proj-detail-item">Modélisation sur Autodesk Inventor</div>
+            <div class="proj-detail-item">Programmation Arduino (C) — capteurs, actionneurs</div>
+            <div class="proj-detail-item">Câblage et branchement électronique</div>
+            <div class="proj-detail-item">Planification Gantt, coordination d'équipe</div>
+          </div>
+          <div class="tags">
+            <span class="tag">Arduino</span>
+            <span class="tag">C</span>
+            <span class="tag">Inventor</span>
+            <span class="tag">Gantt</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://youtube.com/shorts/9-6kAbZEGKc?feature=share" target="_blank" class="proj-link">▶ Vidéo démo</a>
+            <a href="https://github.com/Hakan-aoe4/Projet/tree/main" target="_blank" class="proj-link">⌥ GitHub</a>
+          </div>
+        </div>
+        <div class="project-num">02</div>
+      </div>
+
+      <!-- PROJET 3 -->
+      <div class="project-card">
+        <div>
+          <div class="proj-category">Développement Web · Administration Système</div>
+          <div class="proj-title">Projet 03 — Gestion des absences (Projet ALBERT)</div>
+          <p class="proj-desc">Conception, programmation et déploiement d’une solution web applicative complexe permettant de piloter l'administration (CRUD), le traitement des justificatifs et la comptabilisation des absences d'un département universitaire[cite: 2].</p>
+          <div class="proj-details">
+            <div class="proj-detail-item">Développement de l'application via le framework Django (Python) et intégration d'un CRUD global pour la gestion des Groupes, Étudiants, Enseignants, Cours et Absences[cite: 2]</div>
+            <div class="proj-detail-item">Modélisation et interconnexion d’une base de données relationnelle MariaDB distribuée sur un réseau multi-machines[cite: 2]</div>
+            <div class="proj-detail-item">Déploiement réseau d'infrastructure : configuration d'un serveur Web Nginx faisant office de reverse proxy vers un serveur d'application Gunicorn sur architecture Debian 13[cite: 2]</div>
+          </div>
+          <div class="tags">
+            <span class="tag">Django (Python)</span>
+            <span class="tag">Nginx</span>
+            <span class="tag">MariaDB / SQL</span>
+            <span class="tag">Gunicorn</span>
+            <span class="tag">Debian 13</span>
+            <span class="tag">CRUD Architecture</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/Nicolasknl/SAE_DJANGO/tree/main" target="_blank" class="proj-link">⌥ Dépôt GitHub</a>
+            <a href="https://github.com/kior5234-blip/Projet-03-SA-2.03-Gestion-des-absences-/blob/main/fiche%20technique%20SAE%20ALBERT%20(2).docx" target="_blank" class="proj-link">📄 Fiche Technique (Docx)</a>
+          </div>
+        </div>
+        <div class="project-num">03</div>
+      </div>
+
+      <!-- PROJET 4 -->
+      <div class="project-card">
+        <div>
+          <div class="proj-category">Cybersécurité · Hygiène Informatique</div>
+          <div class="proj-title">Projet 04 — Sensibilisation à la cybersécurité</div>
+          <p class="proj-desc">Création d'un support vidéo pédagogique et d'une étude de cas visant à sensibiliser les utilisateurs aux bonnes pratiques de sécurité, à la gestion des mots de passe et à la protection des données personnelles.</p>
+          <div class="proj-details">
+            <div class="proj-detail-item">Analyse des risques de sécurité courants (Phishing, ingénierie sociale, vulnérabilités systèmes)</div>
+            <div class="proj-detail-item">Vulgarisation des concepts techniques clés pour un public non averti</div>
+            <div class="proj-detail-item">Montage, réalisation et production d'une vidéo explicative dynamique</div>
+          </div>
+          <div class="tags">
+            <span class="tag">Cybersécurité</span>
+            <span class="tag">Sensibilisation</span>
+            <span class="tag">Hygiène Informatique</span>
+            <span class="tag">Protection des données</span>
+            <span class="tag">Vidéo</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://youtu.be/PUOPbD3qgug" target="_blank" class="proj-link">▶ Vidéo de sensibilisation</a>
+          </div>
+        </div>
+        <div class="project-num">04</div>
+      </div>
+
+      <!-- PROJET 5 -->
+      <div class="project-card">
+        <div>
+          <div class="proj-category">Télécommunications · Infrastructures WiFi</div>
+          <div class="proj-title">Projet 05 — Analyse de couverture WiFi</div>
+          <p class="proj-desc">Analyse, ingénierie physique et cartographie complète de la couverture réseau sans fil du Bâtiment C (Rez-de-chaussée et 1er étage) de l'IUT de Colmar à l'aide de relevés topographiques et d'outils de radiomapping[cite: 3, 4].</p>
+          <div class="proj-details">
+            <div class="proj-detail-item">Création physique d'une infrastructure : fabrication manuelle de câbles RJ45 (Norme T568B), pose de noyaux et raccordement au switch Cisco WS-C2960-24PC-L[cite: 4]</div>
+            <div class="proj-detail-item">Audit énergétique Power over Ethernet (PoE) : mesures au testeur PoE PRO validant l'alimentation d'un AP Cisco Aironet (Classe 3, 56 V DC, 13,5 W reçus pour 802.3af)[cite: 4]</div>
+            <div class="proj-detail-item">Génération de Heatmaps avec Acrylic Wi-Fi HeatMaps : analyse d'impact des atténuations matérielles (murs en béton, placo, portes, vitrages)[cite: 3, 4]</div>
+            <div class="proj-detail-item">Étude spectrale comparative : analyse de la bande 2,4 GHz (portée accrue, canal 6) vs bande 5 GHz (qualité de signal supérieure et débits descendants élevés à courte portée, canal 116)[cite: 4]</div>
+            <div class="proj-detail-item">Simulation complète sur Cisco Packet Tracer : maquettage du routage réseau, serveurs DHCP/DNS, accès sécurisé SSH et contrôleur sans fil (WLC 5500)[cite: 4]</div>
+          </div>
+          <div class="tags">
+            <span class="tag">Acrylic Wi-Fi</span>
+            <span class="tag">Heatmaps</span>
+            <span class="tag">Cisco WLC / AP</span>
+            <span class="tag">Packet Tracer</span>
+            <span class="tag">PoE 802.3af</span>
+            <span class="tag">Câblage T568B</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/kior5234-blip/depot-projet/blob/main/Analyse.pdf" target="_blank" class="proj-link">📄 Rapport d'Analyse WiFi (PDF)</a>
+          </div>
+        </div>
+        <div class="project-num">05</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <div class="page-nav">
+    <a href="competences.html">← Compétences</a>
+    <a href="formation.html">Formation →</a>
+  </div>
+</div>
+</body>
+</html>
