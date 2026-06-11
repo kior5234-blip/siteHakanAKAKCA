@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Hakan Akakca — Projets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0e1117;--surface:#161b27;--border:#20293a;--text:#cdd5e0;--muted:#3a4a60;--muted2:#5a6a80;--tag-bg:#1a2030;--accent:#8b5cf6;--accent-l:#a78bfa;--nav-h:60px;}
+    [data-theme="light"]{--bg:#f4f5f7;--surface:#ffffff;--border:#e2e5ea;--text:#1e2433;--muted:#b8c0cc;--muted2:#6b7588;--tag-bg:#eef0f4;--accent:#7c3aed;--accent-l:#7c3aed;--accent-bg:rgba(124,58,237,.1);--accent-br:rgba(124,58,237,.25);}
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;}
+    nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(14,17,23,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 40px;z-index:100;}
+    .nav-logo{font-family:'DM Mono',monospace;font-size:1rem;color:var(--text);text-decoration:none;}
+    .nav-logo span{color:var(--accent-l);}
+    .nav-links{display:flex;gap:4px;list-style:none;}
+    .nav-links a{color:var(--muted2);text-decoration:none;font-size:.82rem;padding:5px 12px;border-radius:6px;transition:all .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--surface);}
+    .page-wrapper{padding-top:calc(var(--nav-h)+48px);padding-bottom:80px;max-width:900px;margin:0 auto;padding-left:24px;padding-right:24px;}
+    .breadcrumb{font-size:.75rem;color:var(--muted2);margin-bottom:20px;}
+    .breadcrumb a{color:var(--muted2);text-decoration:none;}
+    .breadcrumb a:hover{color:var(--accent-l);}
+    h1{font-size:2rem;font-weight:300;letter-spacing:-.02em;margin-bottom:10px;}
+    .page-desc{font-size:.88rem;color:var(--muted2);margin-bottom:40px;}
+    .section-label{font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:var(--muted2);margin-bottom:20px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+    .project-list{display:flex;flex-direction:column;gap:16px;margin-bottom:52px;}
+    .project-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 26px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;transition:border-color .2s,transform .2s;}
+    .project-card:hover{border-color:var(--muted2);transform:translateY(-1px);}
+    .proj-cat{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted2);margin-bottom:7px;text-transform:uppercase;letter-spacing:.08em;}
+    .proj-title{font-size:1.05rem;font-weight:500;color:var(--text);margin-bottom:8px;}
+    .proj-desc{font-size:.82rem;color:var(--muted2);line-height:1.7;margin-bottom:12px;}
+    .proj-details{margin-bottom:12px;}
+    .proj-detail{display:flex;align-items:flex-start;gap:7px;font-size:.78rem;color:var(--text);margin-bottom:4px;}
+    .proj-detail::before{content:'—';color:var(--muted2);flex-shrink:0;}
+    .tags{display:flex;flex-wrap:wrap;gap:5px;}
+    .tag{background:var(--tag-bg);color:var(--muted2);font-size:.72rem;padding:3px 10px;border-radius:4px;border:1px solid var(--border);}
+    .proj-links{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap;}
+    .proj-link{display:inline-flex;align-items:center;gap:5px;font-size:.75rem;font-weight:500;color:var(--muted2);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:6px;background:var(--tag-bg);transition:all .2s;}
+    .proj-link:hover{border-color:var(--accent);color:var(--accent-l);}
+
+    /* PREUVES / LIVRABLES */
+    .proj-evidence{margin-top:14px;padding-top:14px;border-top:1px dashed var(--border);}
+    .evidence-label{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:9px;display:flex;align-items:center;gap:6px;}
+    .evidence-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);}
+    .evidence-grid{display:flex;flex-wrap:wrap;gap:8px;}
+    .evidence-card{display:flex;align-items:center;gap:10px;background:var(--tag-bg);border:1px solid var(--border);border-radius:8px;padding:8px 14px 8px 10px;text-decoration:none;transition:all .2s;}
+    .evidence-card:hover{border-color:var(--accent);background:var(--accent-bg);transform:translateY(-1px);}
+    .evidence-icon{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+    .evidence-icon.pdf{background:rgba(248,113,113,.12);color:#f87171;}
+    .evidence-icon.docx{background:rgba(96,165,250,.12);color:#60a5fa;}
+    .evidence-icon.pptx{background:rgba(251,146,60,.12);color:#fb923c;}
+    .evidence-icon.video{background:rgba(74,222,128,.12);color:#4ade80;}
+    .evidence-icon.code{background:rgba(167,139,250,.12);color:#a78bfa;}
+    .evidence-text{display:flex;flex-direction:column;gap:1px;}
+    .evidence-name{font-size:.78rem;font-weight:500;color:var(--text);}
+    .evidence-type{font-size:.68rem;color:var(--muted2);font-family:'DM Mono',monospace;}
+    .proj-num{font-family:'DM Mono',monospace;font-size:2.2rem;font-weight:300;color:var(--border);line-height:1;user-select:none;}
+    .page-nav{display:flex;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--border);}
+    .page-nav a{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted2);text-decoration:none;padding:8px 16px;border:1px solid var(--border);border-radius:7px;transition:all .2s;}
+    .page-nav a:hover{border-color:var(--accent);color:var(--accent-l);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .project-card{animation:fadeUp .4s ease both;}
+    .project-card:nth-child(2){animation-delay:.05s;}
+    .project-card:nth-child(3){animation-delay:.1s;}
+    .project-card:nth-child(4){animation-delay:.15s;}
+    .project-card:nth-child(5){animation-delay:.2s;}
+    .project-card:nth-child(6){animation-delay:.25s;}
+    @media(max-width:640px){nav{padding:0 16px;}.nav-links{display:none;}.project-card{grid-template-columns:1fr;}.proj-num{font-size:1.5rem;}}
+  
+    .theme-toggle{display:flex;align-items:center;gap:6px;background:var(--tag-bg);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:.75rem;color:var(--muted2);cursor:pointer;transition:all .2s;}
+    .theme-toggle:hover{border-color:var(--accent);color:var(--accent-l);}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="gate.html" class="nav-logo">HA<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" id="nav-home">Accueil</a></li>
+    <li><a href="competences.html" id="nav-comp">Compétences</a></li>
+    <li><a href="projets.html" class="active" id="nav-proj">Projets</a></li>
+    <li><a href="formation.html" id="nav-form">Formation</a></li>
+  </ul>
+  <div class="nav-right" style="display:flex;align-items:center;">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️ <span id="theme-label">Clair</span></button>
+  </div>
+</nav>
+<div class="page-wrapper">
+  <div class="breadcrumb"><a href="index.html" id="bc-home">Accueil</a> / <span id="bc-proj">Projets</span></div>
+  <h1 id="page-title">Projets</h1>
+  <p class="page-desc" id="page-desc">Réalisations académiques et personnelles — BUT RT</p>
+  <div class="section-label" id="sec-label">Projets universitaires — BUT RT</div>
+  <div class="project-list">
+
+    <!-- 01 -->
+    <div class="project-card">
+      <div>
+        <div class="proj-cat" id="p1-cat">Développement logiciel · Python · PowerShell</div>
+        <div class="proj-title" id="p1-title">Projet 01 — Outil de détection de gros fichiers</div>
+        <p class="proj-desc" id="p1-desc">Application complète de reporting pour détecter et gérer les fichiers volumineux sur Windows. Interface graphique avec camembert interactif, cases à cocher et génération automatique d'un script PowerShell de suppression.</p>
+        <div class="proj-details">
+          <div class="proj-detail" id="p1-d1">Script 1 (PyQt5) — sélection graphique du répertoire à analyser</div>
+          <div class="proj-detail" id="p1-d2">Script 2 (Python) — parcours arborescence, tri par taille, export JSON</div>
+          <div class="proj-detail" id="p1-d3">Script 3 (PyQt5) — IHM avec QChart, légendes par onglets, cases à cocher</div>
+          <div class="proj-detail" id="p1-d4">PowerShell orchestrateur — enchaîne les 3 scripts automatiquement</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">PyQt5</span><span class="tag">PowerShell</span><span class="tag">JSON</span><span class="tag">QChart</span><span class="tag">Développement logiciel</span>
+        </div>
+        <div class="proj-evidence">
+          <div class="evidence-label" id="p1-ev-label">Preuves & livrables</div>
+          <div class="evidence-grid">
+            <a href="https://github.com/kior5234-blip/Projet-01-SA-1.05-Outil-gros-fichiers-/blob/main/SA%C3%891.05%20Traiter%20les%20donn%C3%A9es%20(2).pdf" target="_blank" class="evidence-card">
+              <div class="evidence-icon pdf">📄</div>
+              <div class="evidence-text"><span class="evidence-name" id="p1-l1">Rapport d'analyse</span><span class="evidence-type">PDF</span></div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="proj-num">01</div>
+    </div>
+
+    <!-- 02 -->
+    <div class="project-card">
+      <div>
+        <div class="proj-cat" id="p2-cat">Développement / IoT · Arduino</div>
+        <div class="proj-title" id="p2-title">Projet 02 — Serre autonome automatisée</div>
+        <p class="proj-desc" id="p2-desc">Conception et réalisation complète d'une mini-serre automatisée : modélisation 3D, câblage électronique, programmation Arduino en C.</p>
+        <div class="proj-details">
+          <div class="proj-detail" id="p2-d1">Modélisation sur Autodesk Inventor</div>
+          <div class="proj-detail" id="p2-d2">Programmation Arduino (C) — capteurs, actionneurs</div>
+          <div class="proj-detail" id="p2-d3">Câblage et branchement électronique</div>
+          <div class="proj-detail" id="p2-d4">Planification Gantt, coordination d'équipe</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Arduino</span><span class="tag">C</span><span class="tag">Inventor</span><span class="tag">Gantt</span>
+        </div>
+        <div class="proj-evidence">
+          <div class="evidence-label" id="p2-ev-label">Preuves & livrables</div>
+          <div class="evidence-grid">
+            <a href="https://youtube.com/shorts/9-6kAbZEGKc?feature=share" target="_blank" class="evidence-card">
+              <div class="evidence-icon video">▶</div>
+              <div class="evidence-text"><span class="evidence-name" id="p2-l1">Vidéo démo</span><span class="evidence-type">YouTube</span></div>
+            </a>
+            <a href="https://github.com/Hakan-aoe4/Projet/tree/main" target="_blank" class="evidence-card">
+              <div class="evidence-icon code">⌥</div>
+              <div class="evidence-text"><span class="evidence-name" id="p2-l2">Dépôt du projet</span><span class="evidence-type">GitHub</span></div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="proj-num">02</div>
+    </div>
+
+    <!-- 03 -->
+    <div class="project-card">
+      <div>
+        <div class="proj-cat" id="p3-cat">Développement Web · Administration Système</div>
+        <div class="proj-title" id="p3-title">Projet 03 — Gestion des absences (Projet ALBERT)</div>
+        <p class="proj-desc" id="p3-desc">Conception, programmation et déploiement d'une solution web applicative permettant de piloter l'administration CRUD, le traitement des justificatifs et la comptabilisation des absences d'un département universitaire.</p>
+        <div class="proj-details">
+          <div class="proj-detail" id="p3-d1">Développement Django (Python) — CRUD Groupes, Étudiants, Enseignants, Cours, Absences</div>
+          <div class="proj-detail" id="p3-d2">Base de données relationnelle MariaDB distribuée sur réseau multi-machines</div>
+          <div class="proj-detail" id="p3-d3">Déploiement Nginx (reverse proxy) + Gunicorn sur Debian 13</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Django</span><span class="tag">Python</span><span class="tag">Nginx</span><span class="tag">MariaDB</span><span class="tag">Gunicorn</span><span class="tag">Debian 13</span>
+        </div>
+        <div class="proj-evidence">
+          <div class="evidence-label" id="p3-ev-label">Preuves & livrables</div>
+          <div class="evidence-grid">
+            <a href="https://github.com/Nicolasknl/SAE_DJANGO/tree/main" target="_blank" class="evidence-card">
+              <div class="evidence-icon code">⌥</div>
+              <div class="evidence-text"><span class="evidence-name" id="p3-l1">Dépôt du projet</span><span class="evidence-type">GitHub</span></div>
+            </a>
+            <a href="https://github.com/kior5234-blip/Projet-03-SA-2.03-Gestion-des-absences-/blob/main/fiche%20technique%20SAE%20ALBERT%20(2).docx" target="_blank" class="evidence-card">
+              <div class="evidence-icon docx">📄</div>
+              <div class="evidence-text"><span class="evidence-name" id="p3-l2">Fiche technique</span><span class="evidence-type">DOCX</span></div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="proj-num">03</div>
+    </div>
+
+    <!-- 04 -->
+    <div class="project-card">
+      <div>
+        <div class="proj-cat" id="p4-cat">Cybersécurité · Hygiène Informatique</div>
+        <div class="proj-title" id="p4-title">Projet 04 — Sensibilisation à la cybersécurité</div>
+        <p class="proj-desc" id="p4-desc">Création d'un support vidéo pédagogique visant à sensibiliser les utilisateurs aux bonnes pratiques de sécurité, à la gestion des mots de passe et à la protection des données personnelles.</p>
+        <div class="proj-details">
+          <div class="proj-detail" id="p4-d1">Analyse des risques courants (phishing, ingénierie sociale, vulnérabilités)</div>
+          <div class="proj-detail" id="p4-d2">Vulgarisation des concepts techniques pour un public non averti</div>
+          <div class="proj-detail" id="p4-d3">Montage, réalisation et production vidéo</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Cybersécurité</span><span class="tag">Sensibilisation</span><span class="tag">Hygiène informatique</span><span class="tag">Vidéo</span>
+        </div>
+        <div class="proj-evidence">
+          <div class="evidence-label" id="p4-ev-label">Preuves & livrables</div>
+          <div class="evidence-grid">
+            <a href="https://youtu.be/PUOPbD3qgug" target="_blank" class="evidence-card">
+              <div class="evidence-icon video">▶</div>
+              <div class="evidence-text"><span class="evidence-name" id="p4-l1">Vidéo de sensibilisation</span><span class="evidence-type">YouTube</span></div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="proj-num">04</div>
+    </div>
+
+    <!-- 05 -->
+    <div class="project-card">
+      <div>
+        <div class="proj-cat" id="p5-cat">Télécommunications · Infrastructures WiFi</div>
+        <div class="proj-title" id="p5-title">Projet 05 — Analyse de couverture WiFi (Bât. C IUT)</div>
+        <p class="proj-desc" id="p5-desc">Analyse, ingénierie physique et cartographie complète de la couverture WiFi du Bâtiment C (RDC et 1er étage) de l'IUT de Colmar via relevés topographiques et outils de radiomapping.</p>
+        <div class="proj-details">
+          <div class="proj-detail" id="p5-d1">Fabrication câbles RJ45 norme T568B, raccordement switch Cisco WS-C2960-24PC-L</div>
+          <div class="proj-detail" id="p5-d2">Audit PoE 802.3af — AP Cisco Aironet (Classe 3, 56V DC, 13,5W)</div>
+          <div class="proj-detail" id="p5-d3">Heatmaps Acrylic Wi-Fi — atténuations béton, placo, vitrages</div>
+          <div class="proj-detail" id="p5-d4">Étude spectrale 2,4 GHz (canal 6) vs 5 GHz (canal 116)</div>
+          <div class="proj-detail" id="p5-d5">Simulation Packet Tracer — DHCP/DNS, SSH, WLC 5500</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Acrylic Wi-Fi</span><span class="tag">Heatmap</span><span class="tag">Cisco WLC/AP</span><span class="tag">Packet Tracer</span><span class="tag">PoE 802.3af</span><span class="tag">T568B</span>
+        </div>
+        <div class="proj-evidence">
+          <div class="evidence-label" id="p5-ev-label">Preuves & livrables</div>
+          <div class="evidence-grid">
+            <a href="https://github.com/kior5234-blip/depot-projet/blob/main/Analyse.pdf" target="_blank" class="evidence-card">
+              <div class="evidence-icon pdf">📄</div>
+              <div class="evidence-text"><span class="evidence-name" id="p5-l1">Rapport d'analyse WiFi</span><span class="evidence-type">PDF</span></div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="proj-num">05</div>
+    </div>
+
+    <!-- 06 -->
+    <div class="project-card">
+      <div>
+        <div class="proj-cat" id="p6-cat">Réseau · Infrastructure · SAÉ 2.03</div>
+        <div class="proj-title" id="p6-title">Projet 06 — Mettre en place une solution informatique pour l'entreprise</div>
+        <p class="proj-desc" id="p6-desc">Conception et déploiement d'une infrastructure informatique complète pour répondre aux besoins d'une entreprise : réseau, serveurs, services, et présentation de la solution.</p>
+        <div class="proj-details">
+          <div class="proj-detail" id="p6-d1">Analyse des besoins et conception de l'architecture réseau</div>
+          <div class="proj-detail" id="p6-d2">Mise en place des services serveurs et infrastructure</div>
+          <div class="proj-detail" id="p6-d3">Documentation technique et présentation orale du projet</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Réseau</span><span class="tag">Infrastructure</span><span class="tag">Administration système</span><span class="tag">Présentation</span>
+        </div>
+        <div class="proj-evidence">
+          <div class="evidence-label" id="p6-ev-label">Preuves & livrables</div>
+          <div class="evidence-grid">
+            <a href="https://github.com/kior5234-blip/depot-projet/blob/main/fiche%20technique%20SAE%20ALBERT%20(3).docx" target="_blank" class="evidence-card">
+              <div class="evidence-icon docx">📄</div>
+              <div class="evidence-text"><span class="evidence-name" id="p6-l1">Fiche technique</span><span class="evidence-type">DOCX</span></div>
+            </a>
+            <a href="https://github.com/kior5234-blip/depot-projet/blob/main/SAE_ALBERT_Presentation_v2%20(2).pptx" target="_blank" class="evidence-card">
+              <div class="evidence-icon pptx">📊</div>
+              <div class="evidence-text"><span class="evidence-name" id="p6-l2">Présentation du projet</span><span class="evidence-type">PPTX</span></div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="proj-num">06</div>
+    </div>
+
+  </div>
+  <div class="page-nav">
+    <a href="competences.html" id="nav-back">← Compétences</a>
+    <a href="formation.html" id="nav-next">Formation →</a>
+  </div>
+</div>
+
+<script>
+  const lang=localStorage.getItem('lang')||'fr';
+  const TR={
+    fr:{navHome:'Accueil',navComp:'Compétences',navProj:'Projets',navForm:'Formation',bcHome:'Accueil',bcProj:'Projets',pageTitle:'Projets',pageDesc:'Réalisations académiques et personnelles — BUT RT',secLabel:'Projets universitaires — BUT RT',
+      p1Cat:'Développement logiciel · Python · PowerShell',p1Title:'Projet 01 — Outil de détection de gros fichiers',p1Desc:"Application complète de reporting pour détecter et gérer les fichiers volumineux sur Windows. Interface graphique avec camembert interactif et génération automatique d'un script PowerShell.",p1D1:'Script 1 (PyQt5) — sélection graphique du répertoire',p1D2:'Script 2 (Python) — parcours arborescence, tri, export JSON',p1D3:'Script 3 (PyQt5) — IHM avec QChart, onglets, cases à cocher',p1D4:'PowerShell orchestrateur — enchaîne les 3 scripts',p1L1:'📄 Rapport d\'analyse (PDF)',
+      p2Cat:'Développement / IoT · Arduino',p2Title:'Projet 02 — Serre autonome automatisée',p2Desc:"Conception et réalisation complète d'une mini-serre automatisée : modélisation 3D, câblage électronique, programmation Arduino en C.",p2D1:'Modélisation sur Autodesk Inventor',p2D2:'Programmation Arduino (C) — capteurs, actionneurs',p2D3:'Câblage et branchement électronique',p2D4:"Planification Gantt, coordination d'équipe",p2L1:'▶ Vidéo démo',p2L2:'GitHub',
+      p3Cat:'Développement Web · Administration Système',p3Title:'Projet 03 — Gestion des absences (Projet ALBERT)',p3Desc:"Conception, programmation et déploiement d'une solution web applicative pour la gestion des absences d'un département universitaire.",p3D1:'Django (Python) — CRUD Groupes, Étudiants, Enseignants, Cours, Absences',p3D2:'MariaDB distribuée sur réseau multi-machines',p3D3:'Déploiement Nginx + Gunicorn sur Debian 13',p3L1:'GitHub',p3L2:'📄 Fiche technique (DOCX)',
+      p4Cat:'Cybersécurité · Hygiène Informatique',p4Title:'Projet 04 — Sensibilisation à la cybersécurité',p4Desc:'Vidéo pédagogique sur les bonnes pratiques de sécurité, gestion des mots de passe et protection des données.',p4D1:'Analyse des risques courants (phishing, ingénierie sociale)',p4D2:'Vulgarisation pour public non averti',p4D3:'Montage, réalisation et production vidéo',p4L1:'▶ Vidéo de sensibilisation',
+      p5Cat:'Télécommunications · Infrastructures WiFi',p5Title:'Projet 05 — Analyse de couverture WiFi (Bât. C IUT)',p5Desc:'Cartographie complète de la couverture WiFi du Bâtiment C de l\'IUT de Colmar via relevés topographiques et radiomapping.',p5D1:'Fabrication câbles RJ45 norme T568B, switch Cisco WS-C2960-24PC-L',p5D2:'Audit PoE 802.3af — AP Cisco Aironet (Classe 3, 56V DC, 13,5W)',p5D3:'Heatmaps Acrylic Wi-Fi — atténuations béton, placo, vitrages',p5D4:'Étude spectrale 2,4 GHz (canal 6) vs 5 GHz (canal 116)',p5D5:'Simulation Packet Tracer — DHCP/DNS, SSH, WLC 5500',p5L1:'Rapport d\'analyse WiFi',
+      p6Cat:'Réseau · Infrastructure · SAÉ 2.03',p6Title:"Projet 06 — Mettre en place une solution informatique pour l'entreprise",p6Desc:"Conception et déploiement d'une infrastructure informatique complète pour répondre aux besoins d'une entreprise : réseau, serveurs, services, et présentation de la solution.",p6D1:"Analyse des besoins et conception de l'architecture réseau",p6D2:'Mise en place des services serveurs et infrastructure',p6D3:'Documentation technique et présentation orale du projet',p6L1:'Fiche technique',p6L2:'Présentation du projet',
+      evLabel:'Preuves & livrables',
+      navBack:'← Compétences',navNext:'Formation →'},
+    en:{navHome:'Home',navComp:'Skills',navProj:'Projects',navForm:'Education',bcHome:'Home',bcProj:'Projects',pageTitle:'Projects',pageDesc:'Academic and personal projects — BUT Networks & Telecom',secLabel:'University projects — BUT RT',
+      p1Cat:'Software development · Python · PowerShell',p1Title:'Project 01 — Large file detection tool',p1Desc:'Full reporting app to detect and manage large files on Windows. GUI with interactive pie chart and auto-generated PowerShell deletion script.',p1D1:'Script 1 (PyQt5) — graphical directory selector',p1D2:'Script 2 (Python) — tree analysis, sort by size, JSON export',p1D3:'Script 3 (PyQt5) — GUI with QChart, tabs, checkboxes',p1D4:'PowerShell orchestrator — chains all 3 scripts',p1L1:'📄 Analysis report (PDF)',
+      p2Cat:'Development / IoT · Arduino',p2Title:'Project 02 — Automated greenhouse',p2Desc:'Full design and build of a mini automated greenhouse: 3D modelling, wiring, Arduino C programming.',p2D1:'3D modelling on Autodesk Inventor',p2D2:'Arduino (C) programming — sensors, actuators',p2D3:'Electronic wiring and connections',p2D4:'Gantt planning, team coordination',p2L1:'▶ Demo video',p2L2:'GitHub',
+      p3Cat:'Web development · System administration',p3Title:'Project 03 — Absence management (ALBERT)',p3Desc:'Design, programming and deployment of a web app for managing university department absences.',p3D1:'Django (Python) — CRUD for Groups, Students, Teachers, Courses, Absences',p3D2:'MariaDB distributed across multi-machine network',p3D3:'Nginx + Gunicorn deployment on Debian 13',p3L1:'GitHub',p3L2:'📄 Technical sheet (DOCX)',
+      p4Cat:'Cybersecurity · Digital hygiene',p4Title:'Project 04 — Cybersecurity awareness',p4Desc:'Educational video on security best practices: passwords, phishing, data protection.',p4D1:'Analysis of common risks (phishing, social engineering)',p4D2:'Simplified content for non-technical audience',p4D3:'Video editing and production',p4L1:'▶ Awareness video',
+      p5Cat:'Telecommunications · WiFi infrastructure',p5Title:'Project 05 — WiFi coverage analysis (Building C IUT)',p5Desc:'Full WiFi coverage mapping of Building C at IUT Colmar using topographic surveys and radiomapping tools.',p5D1:'RJ45 T568B cable fabrication, Cisco WS-C2960-24PC-L switch',p5D2:'PoE 802.3af audit — Cisco Aironet AP (Class 3, 56V DC, 13.5W)',p5D3:'Acrylic Wi-Fi heatmaps — concrete, plasterboard, glass attenuation',p5D4:'Spectral study 2.4 GHz (ch.6) vs 5 GHz (ch.116)',p5D5:'Packet Tracer simulation — DHCP/DNS, SSH, WLC 5500',p5L1:'WiFi analysis report',
+      p6Cat:'Networking · Infrastructure · SAÉ 2.03',p6Title:'Project 06 — Setting up an IT solution for a company',p6Desc:'Design and deployment of a complete IT infrastructure to meet a company\'s needs: network, servers, services, and project presentation.',p6D1:'Needs analysis and network architecture design',p6D2:'Setup of server services and infrastructure',p6D3:'Technical documentation and oral presentation',p6L1:'Technical sheet',p6L2:'Project presentation',
+      evLabel:'Evidence & deliverables',
+      navBack:'← Skills',navNext:'Education →'}
+  };
+  function applyLang(){
+    const t=TR[lang];
+    const m={'nav-home':t.navHome,'nav-comp':t.navComp,'nav-proj':t.navProj,'nav-form':t.navForm,'bc-home':t.bcHome,'bc-proj':t.bcProj,'page-title':t.pageTitle,'page-desc':t.pageDesc,'sec-label':t.secLabel,
+      'p1-cat':t.p1Cat,'p1-title':t.p1Title,'p1-desc':t.p1Desc,'p1-d1':t.p1D1,'p1-d2':t.p1D2,'p1-d3':t.p1D3,'p1-d4':t.p1D4,'p1-l1':t.p1L1,
+      'p2-cat':t.p2Cat,'p2-title':t.p2Title,'p2-desc':t.p2Desc,'p2-d1':t.p2D1,'p2-d2':t.p2D2,'p2-d3':t.p2D3,'p2-d4':t.p2D4,'p2-l1':t.p2L1,'p2-l2':t.p2L2,
+      'p3-cat':t.p3Cat,'p3-title':t.p3Title,'p3-desc':t.p3Desc,'p3-d1':t.p3D1,'p3-d2':t.p3D2,'p3-d3':t.p3D3,'p3-l1':t.p3L1,'p3-l2':t.p3L2,
+      'p4-cat':t.p4Cat,'p4-title':t.p4Title,'p4-desc':t.p4Desc,'p4-d1':t.p4D1,'p4-d2':t.p4D2,'p4-d3':t.p4D3,'p4-l1':t.p4L1,
+      'p5-cat':t.p5Cat,'p5-title':t.p5Title,'p5-desc':t.p5Desc,'p5-d1':t.p5D1,'p5-d2':t.p5D2,'p5-d3':t.p5D3,'p5-d4':t.p5D4,'p5-d5':t.p5D5,'p5-l1':t.p5L1,
+      'p6-cat':t.p6Cat,'p6-title':t.p6Title,'p6-desc':t.p6Desc,'p6-d1':t.p6D1,'p6-d2':t.p6D2,'p6-d3':t.p6D3,'p6-l1':t.p6L1,'p6-l2':t.p6L2,
+      'p1-ev-label':t.evLabel,'p2-ev-label':t.evLabel,'p3-ev-label':t.evLabel,'p4-ev-label':t.evLabel,'p5-ev-label':t.evLabel,'p6-ev-label':t.evLabel,
+      'nav-back':t.navBack,'nav-next':t.navNext};
+    Object.entries(m).forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.textContent=val;});
+    document.documentElement.lang=lang;
+  }
+
+  // THEME TOGGLE
+  function applyTheme(theme){
+    if(theme==='light'){
+      document.documentElement.setAttribute('data-theme','light');
+      document.getElementById('theme-label').textContent = lang==='fr'?'Sombre':'Dark';
+      document.getElementById('themeToggle').firstChild.textContent='🌙 ';
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      document.getElementById('theme-label').textContent = lang==='fr'?'Clair':'Light';
+      document.getElementById('themeToggle').firstChild.textContent='☀️ ';
+    }
+  }
+  function toggleTheme(){
+    const current = document.documentElement.getAttribute('data-theme')==='light' ? 'light' : 'dark';
+    const next = current==='light' ? 'dark' : 'light';
+    localStorage.setItem('theme', next);
+    applyTheme(next);
+  }
+  applyTheme(localStorage.getItem('theme')||'dark');
+  applyLang();
+</script>
+</body>
+</html>

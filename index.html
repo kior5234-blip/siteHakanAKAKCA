@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Hakan Akakca — Portfolio</title>
+  <meta name="description" content="Hakan Akakca — Étudiant BUT Réseaux & Télécommunications IUT Colmar. Compétences : VLAN, DHCP, TCP/IP, Wireshark, Linux, Python, GNS3, Arduino. 5 projets réalisés.">
+  <meta name="author" content="Hakan Akakca">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0e1117;--surface:#161b27;--border:#20293a;--text:#cdd5e0;--muted:#3a4a60;--muted2:#5a6a80;--tag-bg:#1a2030;--accent:#8b5cf6;--accent-l:#a78bfa;--accent-bg:rgba(139,92,246,.15);--accent-br:rgba(139,92,246,.3);--nav-h:60px;}
+    [data-theme="light"]{--bg:#f4f5f7;--surface:#ffffff;--border:#e2e5ea;--text:#1e2433;--muted:#b8c0cc;--muted2:#6b7588;--tag-bg:#eef0f4;--accent:#7c3aed;--accent-l:#7c3aed;--accent-bg:rgba(124,58,237,.1);--accent-br:rgba(124,58,237,.25);}
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;}
+    nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(14,17,23,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 40px;z-index:100;}
+    .nav-logo{font-family:'DM Mono',monospace;font-size:1rem;color:var(--text);text-decoration:none;}
+    .nav-logo span{color:var(--accent-l);}
+    .nav-links{display:flex;gap:4px;list-style:none;}
+    .nav-links a{color:var(--muted2);text-decoration:none;font-size:.82rem;padding:5px 12px;border-radius:6px;transition:all .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--surface);}
+    .nav-right{display:flex;gap:8px;align-items:center;}
+    .friend-badge{display:none;align-items:center;gap:5px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);border-radius:6px;padding:4px 10px;font-size:.75rem;color:#4ade80;}
+    .friend-badge.visible{display:flex;}
+    .friend-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:#4ade80;}
+    .lock-btn{background:var(--tag-bg);border:1px solid var(--border);border-radius:6px;padding:4px 12px;font-size:.75rem;color:var(--muted2);cursor:pointer;transition:all .2s;}
+    .lock-btn:hover{border-color:var(--accent);color:var(--accent-l);}
+    .pw-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:999;align-items:center;justify-content:center;}
+    .pw-overlay.open{display:flex;}
+    .pw-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px 36px;width:100%;max-width:340px;}
+    .pw-title{font-size:1.2rem;font-weight:300;margin-bottom:6px;}
+    .pw-sub{font-size:.82rem;color:var(--muted2);margin-bottom:20px;}
+    .pw-input{width:100%;background:var(--tag-bg);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--text);outline:none;transition:border .2s;margin-bottom:8px;}
+    .pw-input:focus{border-color:var(--accent);}
+    .pw-err{font-size:.75rem;color:#f87171;min-height:16px;margin-bottom:10px;}
+    .pw-actions{display:flex;gap:8px;}
+    .pw-ok{flex:1;background:var(--accent);border:none;border-radius:8px;padding:10px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;color:#fff;cursor:pointer;transition:opacity .2s;}
+    .pw-ok:hover{opacity:.85;}
+    .pw-cancel{background:transparent;border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--muted2);cursor:pointer;}
+    .pw-cancel:hover{background:var(--tag-bg);}
+    .page-wrapper{padding-top:calc(var(--nav-h) + 40px);padding-bottom:80px;max-width:940px;margin:0 auto;padding-left:24px;padding-right:24px;}
+    .hero{display:grid;grid-template-columns:1fr 130px;gap:40px;align-items:start;padding-bottom:36px;border-bottom:1px solid var(--border);margin-bottom:36px;}
+    .hero-tag{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--muted2);margin-bottom:10px;}
+    .hero-tag::before{content:'';width:6px;height:6px;background:#4ade80;border-radius:50%;box-shadow:0 0 0 2px rgba(74,222,128,.2);}
+    h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;letter-spacing:-.02em;margin-bottom:6px;}
+    h1 em{color:var(--accent-l);font-style:normal;}
+    .hero-sub{font-family:'DM Mono',monospace;font-size:.78rem;color:var(--muted2);margin-bottom:14px;}
+    .hero-desc{font-size:.9rem;color:var(--muted2);max-width:480px;line-height:1.75;margin-bottom:20px;}
+    .hero-photo{width:110px;height:110px;border-radius:50%;background:var(--tag-bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:1.3rem;color:var(--muted2);margin-top:6px;}
+    .contact-row{display:flex;gap:14px;flex-wrap:wrap;}
+    .contact-item{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--muted2);}
+    .contact-item a{color:var(--muted2);text-decoration:none;transition:color .2s;}
+    .contact-item a:hover{color:var(--accent-l);}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;transition:border-color .2s;}
+    .card:hover{border-color:var(--muted2);}
+    .card-title{font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--muted2);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+    .card-title span{font-weight:300;text-transform:none;letter-spacing:0;font-size:.65rem;opacity:.6;margin-left:4px;}
+    .skill-row{display:flex;flex-direction:column;gap:11px;}
+    .skill-item{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+    .skill-label{font-size:.85rem;color:var(--text);}
+    .skill-level{font-size:.7rem;padding:3px 10px;border-radius:5px;font-weight:500;border:1px solid;white-space:nowrap;}
+    .skill-level.confirme{background:rgba(139,92,246,.15);color:#a78bfa;border-color:rgba(139,92,246,.3);}
+    .skill-level.intermediaire{background:rgba(74,222,128,.1);color:#4ade80;border-color:rgba(74,222,128,.2);}
+    .skill-level.notions{background:rgba(251,191,36,.1);color:#fbbf24;border-color:rgba(251,191,36,.2);}
+    .tags{display:flex;flex-wrap:wrap;gap:5px;}
+    .tag{background:var(--tag-bg);color:var(--muted2);font-size:.72rem;padding:3px 10px;border-radius:4px;border:1px solid var(--border);}
+    .proj-list{display:flex;flex-direction:column;gap:8px;}
+    .proj-item{display:flex;align-items:flex-start;gap:10px;}
+    .proj-n{font-family:'DM Mono',monospace;font-size:.9rem;color:var(--border);flex-shrink:0;line-height:1.5;min-width:22px;}
+    .proj-name{font-size:.82rem;font-weight:500;color:var(--text);}
+    .proj-tech{font-size:.72rem;color:var(--muted2);}
+    .btn-link{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;color:var(--muted2);text-decoration:none;padding:4px 10px;border:1px solid var(--border);border-radius:5px;background:var(--tag-bg);transition:all .2s;margin-top:10px;}
+    .btn-link:hover{border-color:var(--accent);color:var(--accent-l);}
+    .timeline{display:flex;flex-direction:column;gap:10px;}
+    .tl-item{display:flex;gap:10px;align-items:flex-start;}
+    .tl-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:6px;flex-shrink:0;}
+    .tl-dot.old{background:var(--border);}
+    .tl-date{font-size:.7rem;font-weight:500;color:var(--muted2);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;}
+    .tl-title{font-size:.82rem;font-weight:500;color:var(--text);}
+    .tl-school{font-size:.72rem;color:var(--muted2);}
+    .lang-list{display:flex;flex-direction:column;gap:8px;}
+    .lang-item{display:flex;align-items:center;justify-content:space-between;}
+    .lang-name{font-size:.82rem;}
+    .lang-dots{display:flex;gap:3px;}
+    .dot{width:6px;height:6px;border-radius:50%;background:var(--tag-bg);border:1px solid var(--border);}
+    .dot.f{background:var(--accent);border-color:var(--accent);}
+    .qual-list{display:flex;flex-direction:column;gap:5px;}
+    .qual-item{font-size:.8rem;color:var(--muted2);display:flex;gap:7px;align-items:flex-start;}
+    .qual-item::before{content:'→';color:var(--accent);flex-shrink:0;}
+    .page-nav{display:flex;justify-content:flex-end;margin-top:36px;padding-top:20px;border-top:1px solid var(--border);}
+    .page-nav a{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted2);text-decoration:none;padding:8px 16px;border:1px solid var(--border);border-radius:7px;transition:all .2s;}
+    .page-nav a:hover{border-color:var(--accent);color:var(--accent-l);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .hero,.grid2,.grid3{animation:fadeUp .4s ease both;}
+    .grid2{animation-delay:.1s;}
+    .grid3{animation-delay:.15s;}
+    @media(max-width:640px){nav{padding:0 16px;}.nav-links{display:none;}.hero{grid-template-columns:1fr;}.hero-photo{order:-1;width:80px;height:80px;}.grid2,.grid3{grid-template-columns:1fr;}.page-wrapper{padding-left:16px;padding-right:16px;}}
+  
+    .theme-toggle{display:flex;align-items:center;gap:6px;background:var(--tag-bg);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:.75rem;color:var(--muted2);cursor:pointer;transition:all .2s;}
+    .theme-toggle:hover{border-color:var(--accent);color:var(--accent-l);}
+  </style>
+</head>
+<body>
+
+<div style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;" aria-hidden="true">Hakan Akakca. Étudiant BUT Réseaux Télécommunications IUT Colmar. Compétences VLAN DHCP TCP/IP OSI Wireshark GNS3 Linux VirtualBox Python HTML CSS Arduino. 5 projets : SAÉ 1.05 Python PyQt5, réseau GNS3, serre Arduino, sensibilisation cybersécurité, WiFi heatmap. BAC STI2D 2025. Permis voiture. GitHub github.com/Hakan-aoe4/Projet.</div>
+
+<div class="pw-overlay" id="pwOverlay">
+  <div class="pw-box">
+    <div class="pw-title">Mode ami</div>
+    <div class="pw-sub">Entre le mot de passe pour débloquer les infos privées.</div>
+    <input class="pw-input" type="password" id="pwInput" placeholder="Mot de passe…" onkeydown="if(event.key==='Enter')checkPw()">
+    <div class="pw-err" id="pwErr"></div>
+    <div class="pw-actions">
+      <button class="pw-cancel" onclick="closeModal()">Annuler</button>
+      <button class="pw-ok" onclick="checkPw()">Accéder</button>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="gate.html" class="nav-logo">HA<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active" id="nav-home">Accueil</a></li>
+    <li><a href="competences.html" id="nav-comp">Compétences</a></li>
+    <li><a href="projets.html" id="nav-proj">Projets</a></li>
+    <li><a href="formation.html" id="nav-form">Formation</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️ <span id="theme-label">Clair</span></button>
+    <div class="friend-badge" id="friendBadge">Mode ami <span onclick="lockMode()" style="cursor:pointer;margin-left:2px;opacity:.6;">✕</span></div>
+    <button class="lock-btn" id="lockBtn" onclick="openModal()">🔒 Mode ami</button>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+
+  <div class="hero">
+    <div>
+      <div class="hero-tag" id="hero-tag-text">Étudiant · Colmar, 68000</div>
+      <h1>Hakan <em>Akakca</em></h1>
+      <div class="hero-sub">BUT Réseaux & Télécommunications · IUT de Colmar</div>
+      <p class="hero-desc" id="hero-desc">Étudiant en 1ère année de BUT RT, passionné par les réseaux, la cybersécurité et l'informatique. Rigoureux et curieux, j'aime apprendre et construire des projets concrets.</p>
+      <div class="contact-row">
+        <span id="phoneSlot"></span>
+        <span id="mailSlot"></span>
+        <span class="contact-item">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          <a href="https://github.com/Hakan-aoe4/Projet/tree/main" target="_blank">GitHub</a>
+        </span>
+        <span class="contact-item">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span id="permis-label">Permis voiture</span>
+        </span>
+      </div>
+    </div>
+    <div class="hero-photo">HA</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title" id="net-title">Réseaux <span id="net-scale">(échelle BUT RT)</span></div>
+      <div class="skill-row">
+        <div class="skill-item"><div class="skill-label">VLAN / Routage inter-VLAN</div><span class="skill-level confirme" id="net-l1">Confirmé</span></div>
+        <div class="skill-item"><div class="skill-label">DHCP / TCP/IP / OSI</div><span class="skill-level confirme" id="net-l2">Confirmé</span></div>
+        <div class="skill-item"><div class="skill-label" id="switch-label">Config switch / routeur</div><span class="skill-level intermediaire" id="net-l3">Intermédiaire</span></div>
+        <div class="skill-item"><div class="skill-label">Wireshark</div><span class="skill-level intermediaire" id="net-l4">Intermédiaire</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" id="sys-title">Systèmes & Informatique <span id="sys-scale">(échelle BUT RT)</span></div>
+      <div class="skill-row">
+        <div class="skill-item"><div class="skill-label">Linux Debian</div><span class="skill-level intermediaire" id="sys-l1">Intermédiaire</span></div>
+        <div class="skill-item"><div class="skill-label">VirtualBox</div><span class="skill-level confirme" id="sys-l2">Confirmé</span></div>
+        <div class="skill-item"><div class="skill-label">HTML / CSS</div><span class="skill-level intermediaire" id="sys-l3">Intermédiaire</span></div>
+        <div class="skill-item"><div class="skill-label">Python</div><span class="skill-level notions" id="sys-l4">Notions</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="card">
+      <div class="card-title" id="proj-title">Projets réalisés</div>
+      <div class="proj-list">
+        <div class="proj-item"><div class="proj-n">01</div><div><div class="proj-name" id="p1-name">Outil détection gros fichiers</div><div class="proj-tech">Python · PyQt5 · PowerShell</div></div></div>
+        <div class="proj-item"><div class="proj-n">02</div><div><div class="proj-name" id="p2-name">Réseau d'entreprise</div><div class="proj-tech">GNS3 · VLAN · RIPv2</div></div></div>
+        <div class="proj-item"><div class="proj-n">03</div><div><div class="proj-name" id="p3-name">Serre automatisée</div><div class="proj-tech">Arduino · C · Inventor</div></div></div>
+        <div class="proj-item"><div class="proj-n">04</div><div><div class="proj-name" id="p4-name">Sensibilisation cybersécurité</div><div class="proj-tech">Vidéo · Phishing · OPSEC</div></div></div>
+        <div class="proj-item"><div class="proj-n">05</div><div><div class="proj-name" id="p5-name">WiFi Heatmap IUT</div><div class="proj-tech">Acrylic · Cisco · PoE</div></div></div>
+        <div class="proj-item"><div class="proj-n">06</div><div><div class="proj-name" id="p6-name">Solution IT entreprise</div><div class="proj-tech">Réseau · Infrastructure</div></div></div>
+      </div>
+      <a href="projets.html" class="btn-link" id="proj-link">Voir le détail →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-title" id="form-title">Formation</div>
+      <div class="timeline" style="margin-bottom:16px;">
+        <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-date">2025 – 2026</div><div class="tl-title">BUT Réseaux & Télécommunications</div><div class="tl-school">IUT de Colmar</div></div></div>
+        <div class="tl-item"><div class="tl-dot old"></div><div><div class="tl-date">2022 – 2025</div><div class="tl-title">BAC STI2D</div><div class="tl-school" id="lycee-label">Lycée Beaumont · St-Dié</div></div></div>
+        <div class="tl-item"><div class="tl-dot old"></div><div><div class="tl-date">2022</div><div class="tl-title" id="brevet-label">Brevet des collèges</div></div></div>
+      </div>
+      <div class="card-title" id="xp-title">Expérience</div>
+      <div class="qual-list">
+        <div class="qual-item" id="xp1">Aide en cuisine — kebab (1 mois)</div>
+        <div class="qual-item" id="xp2">Service, organisation, travail en équipe</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" id="lang-title">Langues</div>
+      <div class="lang-list" style="margin-bottom:16px;">
+        <div class="lang-item"><span>🇫🇷 Français</span><div class="lang-dots"><div class="dot f"></div><div class="dot f"></div><div class="dot f"></div><div class="dot f"></div><div class="dot f"></div></div></div>
+        <div class="lang-item"><span>🇹🇷 Turc</span><div class="lang-dots"><div class="dot f"></div><div class="dot f"></div><div class="dot f"></div><div class="dot f"></div><div class="dot f"></div></div></div>
+        <div class="lang-item"><span>🇬🇧 Anglais</span><div class="lang-dots"><div class="dot f"></div><div class="dot f"></div><div class="dot f"></div><div class="dot"></div><div class="dot"></div></div></div>
+      </div>
+      <div class="card-title" id="qual-title">Qualités</div>
+      <div class="qual-list">
+        <div class="qual-item" id="q1">Rigoureux et organisé</div>
+        <div class="qual-item" id="q2">Apprentissage rapide</div>
+        <div class="qual-item" id="q3">Travail en équipe</div>
+        <div class="qual-item" id="q4">Polyvalent</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-nav"><a href="competences.html" id="nav-link-comp">Compétences détaillées →</a></div>
+</div>
+
+<script>
+  const HASH='d654d711fa1d24e32543c3415d81c3ca4968fe1669857bee2faf3efeef796aca';
+  function _d(s){return atob(s);}
+  const _p=['MDYgNTEgODIgMzkgOTY=','aGFrYW5zaWJlbDIxOEBnbWFpbC5jb20='];
+
+  function injectPrivate(){
+    const ph='<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>';
+    const mh='<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>';
+    const ps=document.getElementById('phoneSlot');
+    ps.className='contact-item';ps.innerHTML=ph+_d(_p[0]);
+    const ms=document.getElementById('mailSlot');
+    ms.className='contact-item';ms.innerHTML=mh+'<a href="mailto:'+_d(_p[1])+'">'+_d(_p[1])+'</a>';
+  }
+  function clearPrivate(){
+    ['phoneSlot','mailSlot'].forEach(id=>{const e=document.getElementById(id);e.className='';e.innerHTML='';});
+  }
+  async function hashStr(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+  async function checkPw(){
+    const h=await hashStr(document.getElementById('pwInput').value);
+    if(h===HASH){closeModal();enableFriend();sessionStorage.setItem('friendMode','1');}
+    else{document.getElementById('pwErr').textContent=lang==='fr'?'Mot de passe incorrect.':'Wrong password.';}
+  }
+  function enableFriend(){document.getElementById('friendBadge').classList.add('visible');document.getElementById('lockBtn').style.display='none';injectPrivate();}
+  function lockMode(){sessionStorage.removeItem('friendMode');document.getElementById('friendBadge').classList.remove('visible');document.getElementById('lockBtn').style.display='';clearPrivate();}
+  function openModal(){document.getElementById('pwOverlay').classList.add('open');document.getElementById('pwInput').value='';document.getElementById('pwErr').textContent='';setTimeout(()=>document.getElementById('pwInput').focus(),100);}
+  function closeModal(){document.getElementById('pwOverlay').classList.remove('open');}
+  document.getElementById('pwOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+  const lang=localStorage.getItem('lang')||'fr';
+  const TR={
+    fr:{heroTag:'Étudiant · Colmar, 68000',heroDesc:"Étudiant en 1ère année de BUT RT, passionné par les réseaux, la cybersécurité et l'informatique. Rigoureux et curieux, j'aime apprendre et construire des projets concrets.",permis:'Permis voiture',netTitle:'Réseaux',netScale:'(échelle BUT RT)',sysTitle:'Systèmes & Informatique',sysScale:'(échelle BUT RT)',switchLabel:'Config switch / routeur',lvlConf:'Confirmé',lvlInter:'Intermédiaire',lvlNot:'Notions',projTitle:'Projets réalisés',p1:'Outil détection gros fichiers',p2:"Réseau d'entreprise",p3:'Serre automatisée',p4:'Sensibilisation cybersécurité',p5:'WiFi Heatmap IUT',p6:'Solution IT entreprise',projLink:'Voir le détail →',formTitle:'Formation',lycee:'Lycée Beaumont · St-Dié',brevet:'Brevet des collèges',xpTitle:'Expérience',xp1:'Aide en cuisine — kebab (1 mois)',xp2:'Service, organisation, travail en équipe',langTitle:'Langues',qualTitle:'Qualités',q1:'Rigoureux et organisé',q2:'Apprentissage rapide',q3:'Travail en équipe',q4:'Polyvalent',navHome:'Accueil',navComp:'Compétences',navProj:'Projets',navForm:'Formation',navLinkComp:'Compétences détaillées →'},
+    en:{heroTag:'Student · Colmar, France',heroDesc:'First-year BUT Networks & Telecommunications student, passionate about networking, cybersecurity and IT. Rigorous and curious, I enjoy building real-world projects.',permis:"Driver's license",netTitle:'Networking',netScale:'(BUT RT scale)',sysTitle:'Systems & IT',sysScale:'(BUT RT scale)',switchLabel:'Switch / router config',lvlConf:'Proficient',lvlInter:'Intermediate',lvlNot:'Basic',projTitle:'Projects',p1:'Large file detection tool',p2:'Enterprise network',p3:'Automated greenhouse',p4:'Cybersecurity awareness',p5:'WiFi Heatmap IUT',p6:'Company IT solution',projLink:'See details →',formTitle:'Education',lycee:'Lycée Beaumont · St-Dié',brevet:'Middle school diploma',xpTitle:'Experience',xp1:'Kitchen assistant — kebab (1 month)',xp2:'Service, organisation, teamwork',langTitle:'Languages',qualTitle:'Skills',q1:'Rigorous and organised',q2:'Fast learner',q3:'Team player',q4:'Versatile',navHome:'Home',navComp:'Skills',navProj:'Projects',navForm:'Education',navLinkComp:'Detailed skills →'}
+  };
+  function applyLang(){
+    const t=TR[lang];
+    document.getElementById('hero-tag-text').textContent=t.heroTag;
+    document.getElementById('hero-desc').textContent=t.heroDesc;
+    document.getElementById('permis-label').textContent=t.permis;
+    document.getElementById('net-title').childNodes[0].textContent=t.netTitle+' ';
+    document.getElementById('net-scale').textContent=t.netScale;
+    document.getElementById('sys-title').childNodes[0].textContent=t.sysTitle+' ';
+    document.getElementById('sys-scale').textContent=t.sysScale;
+    document.getElementById('switch-label').textContent=t.switchLabel;
+    ['net-l1','net-l2','sys-l2'].forEach(id=>document.getElementById(id).textContent=t.lvlConf);
+    ['net-l3','net-l4','sys-l1','sys-l3'].forEach(id=>document.getElementById(id).textContent=t.lvlInter);
+    document.getElementById('sys-l4').textContent=t.lvlNot;
+    document.getElementById('proj-title').textContent=t.projTitle;
+    document.getElementById('p1-name').textContent=t.p1;
+    document.getElementById('p2-name').textContent=t.p2;
+    document.getElementById('p3-name').textContent=t.p3;
+    document.getElementById('p4-name').textContent=t.p4;
+    document.getElementById('p5-name').textContent=t.p5;
+    document.getElementById('p6-name').textContent=t.p6;
+    document.getElementById('proj-link').textContent=t.projLink;
+    document.getElementById('form-title').textContent=t.formTitle;
+    document.getElementById('lycee-label').textContent=t.lycee;
+    document.getElementById('brevet-label').textContent=t.brevet;
+    document.getElementById('xp-title').textContent=t.xpTitle;
+    document.getElementById('xp1').textContent=t.xp1;
+    document.getElementById('xp2').textContent=t.xp2;
+    document.getElementById('lang-title').textContent=t.langTitle;
+    document.getElementById('qual-title').textContent=t.qualTitle;
+    document.getElementById('q1').textContent=t.q1;
+    document.getElementById('q2').textContent=t.q2;
+    document.getElementById('q3').textContent=t.q3;
+    document.getElementById('q4').textContent=t.q4;
+    document.getElementById('nav-home').textContent=t.navHome;
+    document.getElementById('nav-comp').textContent=t.navComp;
+    document.getElementById('nav-proj').textContent=t.navProj;
+    document.getElementById('nav-form').textContent=t.navForm;
+    document.getElementById('nav-link-comp').textContent=t.navLinkComp;
+  }
+  if(sessionStorage.getItem('friendMode'))enableFriend();
+  applyLang();
+
+  // THEME TOGGLE
+  function applyTheme(theme){
+    if(theme==='light'){
+      document.documentElement.setAttribute('data-theme','light');
+      document.getElementById('theme-label').textContent = lang==='fr'?'Sombre':'Dark';
+      document.getElementById('themeToggle').firstChild.textContent='🌙 ';
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      document.getElementById('theme-label').textContent = lang==='fr'?'Clair':'Light';
+      document.getElementById('themeToggle').firstChild.textContent='☀️ ';
+    }
+  }
+  function toggleTheme(){
+    const current = document.documentElement.getAttribute('data-theme')==='light' ? 'light' : 'dark';
+    const next = current==='light' ? 'dark' : 'light';
+    localStorage.setItem('theme', next);
+    applyTheme(next);
+  }
+  applyTheme(localStorage.getItem('theme')||'dark');
+</script>
+</body>
+</html>
